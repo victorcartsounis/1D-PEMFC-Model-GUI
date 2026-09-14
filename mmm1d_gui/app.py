@@ -20,11 +20,11 @@ from PySide6.QtWidgets import (QApplication, QFileDialog, QGroupBox, QLabel,
                                QProgressBar, QSplitter, QTabWidget,
                                QVBoxLayout, QWidget)
 
-from mmm1d import __version__ as model_version
 from mmm1d.metrics import create_run_directory, write_run_log
 from mmm1d.state import Region
 
 from . import theme
+from .about import AboutDialog
 from .config import GuiConfig
 from .dataio import DataImportError, read_polarization_data
 from .diagram import MEADiagram
@@ -543,20 +543,7 @@ class MainWindow(QMainWindow):
         self._refresh_title()
 
     def show_about(self) -> None:
-        QMessageBox.about(
-            self, f"About {WINDOW_TITLE}",
-            f"<h3>{WINDOW_TITLE}</h3>"
-            f"<p>A desktop front end for <b>mmm1d</b> {model_version}, a "
-            f"one-dimensional, steady-state, non-isothermal, two-phase, "
-            f"macro-homogeneous membrane electrode assembly model.</p>"
-            f"<p>The physics and the parameter values follow Vetter and "
-            f"Schumacher, <i>Free open reference implementation of a "
-            f"two-phase PEM fuel cell model</i>, Comput. Phys. Commun. "
-            f"<b>234</b> (2019) 223-234.</p>"
-            f"<p>This window only configures and displays the model: every "
-            f"number it shows comes from the same code "
-            f"<code>run_example.py</code> runs, and each run is written to "
-            f"disk in the same layout.</p>")
+        AboutDialog(WINDOW_TITLE, self).exec()
 
     def _on_material_changed(self) -> None:
         """Keep the diagram showing the geometry that is actually configured."""
