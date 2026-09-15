@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.venv/
+
+# Outputs (one timestamped folder per run)
+results/
+figs/
+
+# OS
+.DS_Store

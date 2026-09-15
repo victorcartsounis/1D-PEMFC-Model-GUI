@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run: the interface",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pemfc_1d_gui",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Debug: the interface (step into the model)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pemfc_1d_gui",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Debug: interface tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests/test_gui.py", "-v", "-s"],
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "1d-pemfc-model-gui"
+version = "0.3.0"
+description = "PySide6 desktop front end for the 1D PEM fuel cell model."
+authors = ["Victor Constantin Cartsounis <vicartsounis@gmail.com>"]
+readme = "README.md"
+license = "BSD-3-Clause"
+packages = [{ include = "pemfc_1d_gui" }]
+
+[tool.poetry.dependencies]
+# Qt publishes no wheels outside this range, and here it is not optional, so
+# the interface inherits the constraint rather than marking it on one entry.
+python = ">=3.10,<3.15"
+
+# The model. A separate repository, pinned to a tag rather than a branch so a
+# given revision of this interface always runs against the solver it was tested
+# with. Raise the tag deliberately, and run the tests when you do.
+#
+# To work on both at once, override the source without editing this file:
+#     poetry add --editable ../1D-PEMFC-Model
+# and drop the override before committing.
+pemfc_1d = { git = "https://github.com/victorcartsounis/1D-PEMFC-Model.git", tag = "v0.3.0" }
+
+PySide6-Essentials = ">=6.6"
+matplotlib = ">=3.7"
+numpy = ">=1.24"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.0"
+
+[tool.poetry.scripts]
+pemfc-1d-gui = "pemfc_1d_gui:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

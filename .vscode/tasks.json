@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "poetry: install",
+            "type": "shell",
+            "command": "poetry install",
+            "problemMatcher": []
+        },
+        {
+            "label": "run: tests",
+            "type": "shell",
+            "command": "poetry run pytest tests/ -v",
+            "problemMatcher": []
+        },
+        {
+            "label": "run: the interface",
+            "type": "shell",
+            "command": "poetry run pemfc-1d-gui",
+            "problemMatcher": []
+        },
+        {
+            "label": "poetry: update the model to its latest tag",
+            "type": "shell",
+            "command": "poetry update pemfc_1d",
+            "problemMatcher": []
+        }
+    ]
+}
