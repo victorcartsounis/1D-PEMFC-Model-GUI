@@ -1,6 +1,6 @@
 """Running a sweep off the GUI thread.
 
-The worker calls ``mmm1d.model.solve`` and the metrics helpers in exactly the
+The worker calls ``pemfc_1d.model.solve`` and the metrics helpers in exactly the
 order ``run_example.py`` does, so a GUI run and a command-line run with the
 same settings produce the same numbers. Nothing here touches matplotlib: the
 figures are built on the GUI thread once the sweep is back, because a Qt canvas
@@ -21,9 +21,9 @@ from dataclasses import dataclass
 import numpy as np
 from PySide6.QtCore import QObject, QThread, Signal
 
-from mmm1d.metrics import (RunMetrics, SolverSettings, convergence_metrics,
-                           sweep_metrics)
-from mmm1d.model import SweepResult, solve
+from pemfc_1d.metrics import (RunMetrics, SolverSettings, convergence_metrics,
+                              sweep_metrics)
+from pemfc_1d.model import SweepResult, solve
 
 from .config import GuiConfig
 

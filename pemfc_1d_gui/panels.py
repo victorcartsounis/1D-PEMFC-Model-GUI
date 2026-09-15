@@ -1,6 +1,6 @@
 """The material and simulation configuration panels.
 
-Both panels are plain editors over :class:`mmm1d_gui.config.GuiConfig`: they
+Both panels are plain editors over :class:`pemfc_1d_gui.config.GuiConfig`: they
 are filled from one with :meth:`load_from` and read back into one with
 :meth:`apply_to`. Neither talks to the solver, so a validation mistake stops at
 the panel instead of reaching the model.
@@ -23,8 +23,8 @@ from PySide6.QtWidgets import (QButtonGroup, QCheckBox, QFileDialog,
                                QScrollArea, QSizePolicy, QSpinBox,
                                QStackedWidget, QVBoxLayout, QWidget)
 
-from mmm1d.metrics import GB_PER_1000_NODES, REFINEMENT_NODE_CEILING
-from mmm1d.model import DEFAULT_MAX_NODES
+from pemfc_1d.metrics import GB_PER_1000_NODES, REFINEMENT_NODE_CEILING
+from pemfc_1d.model import DEFAULT_MAX_NODES
 
 from . import theme
 from .config import GuiConfig, SolverConfig, SweepConfig, default_material

@@ -1,6 +1,6 @@
 """Matplotlib figures embedded in the window.
 
-The figures themselves are built by ``mmm1d.postprocessing`` -- the same code
+The figures themselves are built by ``pemfc_1d.postprocessing`` -- the same code
 ``run_example.py`` calls -- so what the window shows and what lands in the run
 directory are the same picture. They are only wrapped in a Qt canvas here.
 
@@ -27,9 +27,9 @@ from PySide6.QtCore import Qt  # noqa: E402
 from PySide6.QtWidgets import (QLabel, QSizePolicy, QStackedWidget,  # noqa: E402
                                QVBoxLayout, QWidget)
 
-from mmm1d.model import SweepResult  # noqa: E402
-from mmm1d.postprocessing import (plot_polarization_curve,  # noqa: E402
-                                  plot_potentials_and_fluxes)
+from pemfc_1d.model import SweepResult  # noqa: E402
+from pemfc_1d.postprocessing import (plot_polarization_curve,  # noqa: E402
+                                     plot_potentials_and_fluxes)
 
 from . import theme  # noqa: E402
 

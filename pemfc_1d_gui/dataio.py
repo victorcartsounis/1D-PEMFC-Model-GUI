@@ -7,7 +7,7 @@ part that can be done honestly -- read a two-column file and hand it to the
 polarization plot as an overlay, so a run can be eyeballed against data.
 
 No agreement metric is computed. When one is added it belongs beside the
-convergence metrics in ``mmm1d.metrics``, reported per region of the curve
+convergence metrics in ``pemfc_1d.metrics``, reported per region of the curve
 (kinetic, ohmic, mass transport), because a whole-curve error hides a missed
 limiting current.
 """

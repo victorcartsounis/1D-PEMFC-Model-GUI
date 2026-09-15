@@ -1,4 +1,4 @@
-"""A presentable catalogue of the editable fields of ``mmm1d.params.Params``.
+"""A presentable catalogue of the editable fields of ``pemfc_1d.params.Params``.
 
 ``Params`` is a frozen dataclass whose fields carry their units and meanings
 in comments, which the editor cannot read. This module restates them as data:
@@ -14,7 +14,7 @@ from __future__ import annotations
 from dataclasses import dataclass, fields
 from typing import Iterator
 
-from mmm1d.params import Params
+from pemfc_1d.params import Params
 
 #: Field holding the five layer thicknesses; edited as five boxes in microns.
 THICKNESS_FIELD = "L"

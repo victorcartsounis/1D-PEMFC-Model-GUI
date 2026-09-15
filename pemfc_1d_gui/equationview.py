@@ -1,7 +1,7 @@
 """The panel that renders a layer's or a transport process's equations.
 
 A ``QTextBrowser`` does the layout; the maths is rasterised by
-:mod:`mmm1d_gui.mathrender` and registered as document resources, so an
+:mod:`pemfc_1d_gui.mathrender` and registered as document resources, so an
 equation is written into the HTML as a plain ``<img>`` and flows with the text.
 """
 from __future__ import annotations
@@ -12,7 +12,7 @@ from PySide6.QtCore import QUrl
 from PySide6.QtGui import QPixmap, QTextDocument
 from PySide6.QtWidgets import QTextBrowser, QWidget
 
-from mmm1d.state import Quantity, Region
+from pemfc_1d.state import Quantity, Region
 
 from . import theme
 from .equations import (LAYER_DOCS, TRANSPORT_DOCS, EquationGroup, LayerDoc,

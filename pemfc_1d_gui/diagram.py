@@ -24,8 +24,8 @@ from PySide6.QtGui import (QColor, QCursor, QFont, QFontMetricsF, QPainter,
                            QPainterPath, QPen, QPolygonF)
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
-from mmm1d.params import Params
-from mmm1d.state import Region
+from pemfc_1d.params import Params
+from pemfc_1d.state import Region
 
 from . import theme
 

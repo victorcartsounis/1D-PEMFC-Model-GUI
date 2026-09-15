@@ -2,7 +2,7 @@
 
 A :class:`GuiConfig` holds everything the two configuration panels edit: the
 material parameters that become a ``Params`` instance, and the solver settings
-that become the arguments of ``mmm1d.model.solve``. Defaults are read from
+that become the arguments of ``pemfc_1d.model.solve``. Defaults are read from
 ``Params()`` and from the signature of ``solve`` rather than restated here, so
 the dialog opens showing exactly what ``run_example.py`` would run.
 
@@ -19,8 +19,8 @@ from typing import Any
 
 import numpy as np
 
-from mmm1d.model import DEFAULT_MAX_NODES
-from mmm1d.params import Params
+from pemfc_1d.model import DEFAULT_MAX_NODES
+from pemfc_1d.params import Params
 
 from .paramfields import SWEEP_FIELD, THICKNESS_FIELD, editable_names
 

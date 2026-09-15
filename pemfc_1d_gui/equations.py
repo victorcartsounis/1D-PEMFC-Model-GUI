@@ -1,7 +1,7 @@
 """The governing equations of each MEA layer, as shown when a layer is clicked.
 
 Every equation here is a transcription of the corresponding line of
-``mmm1d.model``: ``_agdl``, ``_acl``, ``_pem``, ``_ccl`` and ``_cgdl``. The
+``pemfc_1d.model``: ``_agdl``, ``_acl``, ``_pem``, ``_ccl`` and ``_cgdl``. The
 model writes each layer as a potential/flux pair -- a constitutive law giving
 the flux from the gradient of the quantity, and a balance giving the divergence
 of that flux from the sources acting in the layer -- so the groups below are
@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from mmm1d.state import ACTIVE_REGIONS, Quantity, Region
+from pemfc_1d.state import ACTIVE_REGIONS, Quantity, Region
 
 
 @dataclass(frozen=True)

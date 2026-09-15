@@ -6,7 +6,7 @@ needs. Each snippet is drawn onto a transparent figure, saved to an in-memory
 PNG and cached, so scrolling the panel costs nothing after the first pass.
 
 Only mathtext syntax is available -- single expressions, no ``\\text{}`` and no
-``align`` environments -- which is why :mod:`mmm1d_gui.equations` keeps every
+``align`` environments -- which is why :mod:`pemfc_1d_gui.equations` keeps every
 equation to one line and spells words with ``\\mathrm{}``.
 """
 from __future__ import annotations
