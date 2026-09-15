@@ -19,7 +19,9 @@ python = ">=3.10,<3.15"
 # To work on both at once, override the source without editing this file:
 #     poetry add --editable ../1D-PEMFC-Model
 # and drop the override before committing.
-pemfc_1d = { git = "https://github.com/victorcartsounis/1D-PEMFC-Model.git", tag = "v0.3.0" }
+# Named by its distribution name, which is not the name it is imported under:
+# "1d-pemfc-model" cannot be a Python identifier, so the package is pemfc_1d.
+"1d-pemfc-model" = { git = "https://github.com/victorcartsounis/1D-PEMFC-Model.git", tag = "v0.3.0" }
 
 PySide6-Essentials = ">=6.6"
 matplotlib = ">=3.7"

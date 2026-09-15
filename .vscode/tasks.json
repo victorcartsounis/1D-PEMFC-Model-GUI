@@ -22,7 +22,7 @@
         {
             "label": "poetry: update the model to its latest tag",
             "type": "shell",
-            "command": "poetry update pemfc_1d",
+            "command": "poetry update 1d-pemfc-model",
             "problemMatcher": []
         }
     ]
