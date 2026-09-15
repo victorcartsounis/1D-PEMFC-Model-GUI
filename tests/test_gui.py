@@ -6,8 +6,9 @@ check is therefore :func:`test_panel_round_trip_leaves_every_param_field_bit_ide
 which drives a full pass through the editors and compares every field of
 ``Params`` against a freshly constructed default.
 
-They run headless through Qt's offscreen platform, and skip themselves when
-PySide6 is not installed -- the model does not need it.
+They run headless through Qt's offscreen platform. Unlike when these lived
+alongside the model, there is no skip guard: PySide6 is a hard dependency of
+this project, so its absence is a broken install rather than a valid one.
 """
 from __future__ import annotations
 
@@ -20,21 +21,20 @@ import pytest
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
-pytest.importorskip("PySide6", reason="the GUI is optional; install PySide6-Essentials")
-
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from mmm1d.model import DEFAULT_MAX_NODES  # noqa: E402
-from mmm1d.params import Params  # noqa: E402
-from mmm1d.state import ACTIVE_REGIONS, Quantity, Region  # noqa: E402
-from mmm1d_gui.about import (GITHUB_PROFILE, PHONE_DISPLAY,  # noqa: E402
-                             PHONE_LINK, REPOSITORY, about_html)
-from mmm1d_gui.config import GuiConfig, sweep_from_range  # noqa: E402
-from mmm1d_gui.dataio import DataImportError, read_polarization_data  # noqa: E402
-from mmm1d_gui.equations import (LAYER_DOCS, TRANSPORT_DOCS,  # noqa: E402
-                                 groups_for_quantity)
-from mmm1d_gui.paramfields import (catalogued_names, editable_names,  # noqa: E402
-                                   uncatalogued_fields)
+from pemfc_1d.model import DEFAULT_MAX_NODES  # noqa: E402
+from pemfc_1d.params import Params  # noqa: E402
+from pemfc_1d.state import ACTIVE_REGIONS, Quantity, Region  # noqa: E402
+from pemfc_1d_gui.about import (GITHUB_PROFILE, MODEL_REPOSITORY,  # noqa: E402
+                                PHONE_DISPLAY, PHONE_LINK, REPOSITORY,
+                                about_html)
+from pemfc_1d_gui.config import GuiConfig, sweep_from_range  # noqa: E402
+from pemfc_1d_gui.dataio import DataImportError, read_polarization_data  # noqa: E402
+from pemfc_1d_gui.equations import (LAYER_DOCS, TRANSPORT_DOCS,  # noqa: E402
+                                    groups_for_quantity)
+from pemfc_1d_gui.paramfields import (catalogued_names, editable_names,  # noqa: E402
+                                      uncatalogued_fields)
 
 
 @pytest.fixture(scope="session")
@@ -46,7 +46,7 @@ def qt_app():
 
 @pytest.fixture()
 def window(qt_app):
-    from mmm1d_gui.app import MainWindow
+    from pemfc_1d_gui.app import MainWindow
 
     main_window = MainWindow()
     yield main_window
@@ -214,7 +214,7 @@ def test_every_transport_process_resolves_to_equations():
 
 def test_every_equation_renders():
     """mathtext is a subset of LaTeX; an unsupported macro must not ship."""
-    from mmm1d_gui.mathrender import render_math
+    from pemfc_1d_gui.mathrender import render_math
 
     for region in Region:
         for group in LAYER_DOCS[region].groups:
@@ -279,7 +279,7 @@ def test_every_layer_and_transport_chip_can_be_shown(window):
 
 def test_the_diagram_is_drawn_from_the_configured_geometry(window):
     """The cell is drawn, not loaded, so it must follow Params.L."""
-    from mmm1d.params import Params
+    from pemfc_1d.params import Params
 
     widths = window.diagram._widths()
     assert len(widths) == 5
@@ -295,7 +295,7 @@ def test_the_diagram_follows_a_change_of_thickness(window):
 
     import numpy as _np
 
-    from mmm1d.params import Params
+    from pemfc_1d.params import Params
 
     before = window.diagram._widths().copy()
     thicker = dataclasses.replace(
@@ -327,6 +327,29 @@ def test_about_states_the_author_and_how_to_reach_them():
         assert expected in body, f"the About dialog no longer mentions {expected}"
 
 
+def test_about_names_both_repositories():
+    """The interface and the model are separate projects now.
+
+    Someone who arrives at one should be able to find the other, so the dialog
+    has to name both rather than a single "the repository".
+    """
+    body = about_html("1D PEM Fuel Cell Model")
+    assert REPOSITORY != MODEL_REPOSITORY
+    assert REPOSITORY in body, "the About dialog does not link this interface"
+    assert MODEL_REPOSITORY in body, "the About dialog does not link the model"
+
+
+def test_about_states_both_versions():
+    """A run is reproducible only if both halves are identified."""
+    from pemfc_1d import __version__ as model_version
+
+    from pemfc_1d_gui import __version__ as gui_version
+
+    body = about_html("1D PEM Fuel Cell Model")
+    assert gui_version in body
+    assert f"pemfc_1d {model_version}" in body
+
+
 def test_the_phone_link_is_diallable():
     """A tel: link has to carry bare digits, not the display grouping."""
     assert PHONE_LINK.startswith("tel:+")
@@ -337,7 +360,7 @@ def test_the_phone_link_is_diallable():
 def test_about_dialog_opens_with_working_links(qt_app):
     from PySide6.QtWidgets import QLabel
 
-    from mmm1d_gui.about import AboutDialog
+    from pemfc_1d_gui.about import AboutDialog
 
     dialog = AboutDialog("1D PEM Fuel Cell Model")
     label = dialog.findChild(QLabel)
@@ -355,7 +378,7 @@ def test_both_palettes_define_every_token():
     """A palette missing a colour would crash whichever widget reads it."""
     import dataclasses as _dc
 
-    from mmm1d_gui import theme
+    from pemfc_1d_gui import theme
 
     for palette in (theme.LIGHT, theme.DARK):
         for field in _dc.fields(palette):
@@ -369,7 +392,7 @@ def test_both_palettes_define_every_token():
 
 
 def test_both_palettes_produce_a_stylesheet():
-    from mmm1d_gui import theme
+    from pemfc_1d_gui import theme
 
     for palette in (theme.LIGHT, theme.DARK):
         sheet = theme.stylesheet(palette)
@@ -378,7 +401,7 @@ def test_both_palettes_produce_a_stylesheet():
 
 
 def test_switching_to_dark_and_back_leaves_the_window_working(window):
-    from mmm1d_gui import theme
+    from pemfc_1d_gui import theme
 
     window.set_theme(theme.DARK)
     assert window.action_dark.isChecked()
